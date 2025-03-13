@@ -7,3 +7,7 @@ const server = http.createServer(app);
 server.listen(port,()=>{
     console.log(`Server is running on port ${port}`)
 })
+server.on('error', (err) => {
+    console.error('Server error:', err);
+    process.exit(1);
+});
