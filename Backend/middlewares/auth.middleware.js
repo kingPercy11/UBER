@@ -8,6 +8,10 @@ module.exports.authUser = async (req, res, next) => {
         return res.status(401).json({ message: 'Unauthorized Access' });
 
     }
+    const isBlackListed = await userModel.findOne({token: token });
+    if(isBlackListed){
+        return res.status(401).json({ message: 'Unauthorized Access' });
+    }
     try{
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const user = await userModel.findById(decoded._id);
