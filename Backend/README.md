@@ -19,3 +19,24 @@ The request body should be in JSON format and include the following fields:
   - `lastname` (string, optional): User's last name (minimum 3 characters).
 - `email` (string, required): User's email address (must be a valid email).
 - `password` (string, required): User's password (minimum 6 characters).
+
+## `/users/login` Endpoint
+
+### Description
+
+Authenticates a user using their email and password, returning a JWT token upon successful login.
+
+### HTTP Method
+
+`POST`
+
+### Endpoint
+
+`/users/login`
+
+### Request Body
+
+The request body should be in JSON format and include the following fields:
+
+- `email` (string, required): User's email address (must be a valid email).
+- `password` (string, required): User's password (minimum 6 characters).
