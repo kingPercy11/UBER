@@ -1,7 +1,7 @@
 const driverModel = require('../models/driver.model');
 const driverService = require('../services/driver.service');
 const { validationResult } = require('express-validator');
-
+const blackListTokenModel = require('../models/blacklistToken.model');
 module.exports.registerDriver = async (req, res,next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -53,4 +53,18 @@ module.exports.loginDriver = async (req, res, next) => {
     res.cookie('token', token);
 
     res.status(200).json({ token, driver });
+}
+
+module.exports.getDriverProfile = async (req, res, next) => {
+    res.status(200).json({ driver: req.driver });
+}
+
+module.exports.logoutDriver = async (req, res, next) => {
+    const token = req.cookies.token || req.headers.authorization?.split(' ')[ 1 ];
+
+    await blackListTokenModel.create({ token });
+
+    res.clearCookie('token');
+
+    res.status(200).json({ message: 'Logout successfully' });
 }
