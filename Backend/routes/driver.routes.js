@@ -13,4 +13,10 @@ router.post('/register', [
     body('vehicle.vehicleType').isIn(['car', 'motorcycle', 'auto']).withMessage('Invalid vehicle type')
 ], driverController.registerDriver)
 
+router.post('/login', [
+    body('email').isEmail().withMessage('Please enter a valid email'),
+    body('password').isLength({min: 6}).withMessage('Password must be at least 6 characters long')
+], driverController.loginDriver)
+
+
 module.exports = router;
