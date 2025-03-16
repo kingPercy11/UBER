@@ -9,7 +9,7 @@ const UserLogin = () => {
         e.preventDefault();
         setUserData({
             email: email,
-            password: password
+            password
         })
         // console.log(userData)
         setEmail('')
