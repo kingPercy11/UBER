@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link} from 'react-router-dom'
 
 
 const UserSignup = () => {
@@ -19,7 +19,7 @@ const UserSignup = () => {
       password: password
 
     }
-    console.log(newUser)
+    // console.log(newUser)
     setEmail('')
     setFirstName('')
     setLastName('')
