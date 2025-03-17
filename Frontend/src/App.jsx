@@ -7,7 +7,11 @@ import DriverSignup from "./pages/DriverSignup"
 import DriverLogin from "./pages/DriverLogin"
 import Home from "./pages/Home"
 import UserProtectWrapper from "./pages/UserProtectWrapper"
+import DriverProtectWrapper from "./pages/DriverProtectWrapper"
 import UserLogout from "./pages/UserLogout"
+import DriverLogout from "./pages/DriverLogout"
+import DriverHome from "./pages/DriverHome"
+
 // import { UserDataContext } from "./context/UserContext"
 
 const App = () => {
@@ -28,6 +32,17 @@ const App = () => {
             element={<UserProtectWrapper>
               <UserLogout />
             </UserProtectWrapper>
+            } />
+            <Route path="/driver-home"
+            element={
+              <DriverProtectWrapper>
+                  <DriverHome/>
+              </DriverProtectWrapper>
+            }/>
+            <Route path='/driver/logout'
+            element={<DriverProtectWrapper>
+              <DriverLogout />
+            </DriverProtectWrapper>
             } />
         </Routes>
     </div> 
