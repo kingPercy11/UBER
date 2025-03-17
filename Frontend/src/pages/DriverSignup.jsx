@@ -20,7 +20,7 @@ const DriverSignup = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault()
-    const driverData = {
+    const driverData = { 
         fullname: {
             firstname: firstName,
             lastname: lastName
@@ -38,8 +38,8 @@ const DriverSignup = () => {
     if (response.status === 201) {
       const data = response.data
       setDriver(data.driver)
-      localStorage.setItem('token', data.token)
-      navigate('/home')
+      localStorage.setItem('driver-token', data.token)
+      navigate('/driver-home')
     }
     // console.log(newDriver)
     setEmail('')
@@ -153,7 +153,7 @@ const DriverSignup = () => {
                             <option value="" disabled>Select Vehicle Type</option>
                             <option value="car">Car</option>
                             <option value="auto">Auto</option>
-                            <option value="moto">Moto</option>
+                            <option value="motorcycle">Moto</option>
                             </select>
                         </div>
                         <button
