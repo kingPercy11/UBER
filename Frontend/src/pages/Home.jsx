@@ -1,11 +1,22 @@
-import React, { useState } from "react"
+import React, { useRef, useState } from "react"
+import {useGSAP} from '@gsap/react'
+import gsap from "gsap"
 
 const Home = () => {
     const [pickup, setPickup]=useState('')
-    const [destination, setDestination]=useState(second) 
+    const [destination, setDestination]=useState('') 
+    const [panelOpen, setPanelOpen]=useState(false)
+    const panelRef = useRef(null)
+
     const submitHandler = (e) => {  
         e.preventDefault()
     }
+
+    useGSAP (function(){
+        gsap.to(panelRef.current,{
+            height:'70%'
+        })
+    })
 
     return(
         <div className="h-screen relative">
@@ -27,11 +38,27 @@ const Home = () => {
                     </div>
                         {/* <div className="line absolute h-16 w-1 top-[47%] left-10 bg-gray-900 rounded-full "></div> */}
 
-                        <input className="bg-[#eee] px-8 py-2 text-lg rounded-lg w-full mt-5" type="text" placeholder="Pick-Up Location"/>
-                        <input className="bg-[#eee] px-8 py-2 text-lg rounded-lg w-full mt-3" type="text" placeholder="Drop-off Location"/>
+                        <input
+                         onClick={()=>{
+                            setPanelOpen(true)
+                         }}
+                         value={pickup}
+                         onChange={(e) => 
+                            {setPickup(e.target.value)
+                         }}
+                         className="bg-[#eee] px-8 py-2 text-lg rounded-lg w-full mt-5" type="text" placeholder="Pick-Up Location"/>
+                        <input
+                         onClick={()=>{
+                            setPanelOpen(true)
+                         }}
+                         value={destination}
+                         onChange={(e) => 
+                            {setDestination(e.target.value)
+                         }}
+                        className="bg-[#eee] px-8 py-2 text-lg rounded-lg w-full mt-3" type="text" placeholder="Drop-off Location"/>
                     </form>
                 </div>
-                <div className="h-[70%] bg-amber-400 hidden">
+                <div className="h-0 bg-amber-400 ">
 
                 </div>
             </div>
