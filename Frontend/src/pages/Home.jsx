@@ -58,7 +58,7 @@ const Home = () => {
                         className="bg-[#eee] px-8 py-2 text-lg rounded-lg w-full mt-3" type="text" placeholder="Drop-off Location"/>
                     </form>
                 </div>
-                <div className="h-0 bg-amber-400 ">
+                <div ref={panelRef} className="h-0 bg-amber-400 ">
 
                 </div>
             </div>
