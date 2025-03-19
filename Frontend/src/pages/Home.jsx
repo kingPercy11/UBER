@@ -1,22 +1,39 @@
 import React, { useRef, useState } from "react"
 import {useGSAP} from '@gsap/react'
 import gsap from "gsap"
+import 'remixicon/fonts/remixicon.css'
+
 
 const Home = () => {
     const [pickup, setPickup]=useState('')
     const [destination, setDestination]=useState('') 
     const [panelOpen, setPanelOpen]=useState(false)
     const panelRef = useRef(null)
+    const panelCloseRef = useRef(null)
 
     const submitHandler = (e) => {  
         e.preventDefault()
     }
 
-    useGSAP (function(){
-        gsap.to(panelRef.current,{
-            height:'70%'
-        })
-    })
+    useGSAP(() => {
+        if (panelRef.current && panelOpen) {
+            gsap.to(panelRef.current, {
+                height: '70%',
+                duration: 0.5
+            })
+            gsap.to(panelCloseRef.current, {
+                opacity: 1
+            })
+        } else if (panelRef.current) {
+            gsap.to(panelRef.current, {
+                height: '0%',
+                duration: 0.5
+            })
+            gsap.to(panelCloseRef.current, {
+                opacity: 0
+            })
+        }
+    }, [panelOpen]); 
 
     return(
         <div className="h-screen relative">
@@ -27,6 +44,11 @@ const Home = () => {
             </div>
             <div className="flex flex-col justify-end h-screen absolute top-0 w-full ">
                 <div className="h-[30%] bg-white relative p-5">
+                    <h5 ref={panelCloseRef} onClick={() => {
+                        setPanelOpen(false)
+                    }} className='absolute opacity-0 right-6 top-6 text-2xl'>
+                        <i className="ri-arrow-down-wide-line"></i>
+                    </h5>
                     <h4 className=" text-3xl font-semibold ">Find a ride</h4>
                     <form onSubmit={(e) => {
                         submitHandler(e)
