@@ -3,6 +3,8 @@ import {useGSAP} from '@gsap/react'
 import gsap from "gsap"
 import 'remixicon/fonts/remixicon.css'
 import LocationSearchPanel from "../components/LocationSearchPanel"
+import VehiclePanel from "../components/vehiclePanel"
+
 
 
 const Home = () => {
@@ -11,6 +13,8 @@ const Home = () => {
     const [panelOpen, setPanelOpen]=useState(false)
     const panelRef = useRef(null)
     const panelCloseRef = useRef(null)
+    const vehiclePanelRef = useRef(null)
+    const [vehiclePanel,setVehiclePanel] = useState(false)
 
     const submitHandler = (e) => {  
         e.preventDefault()
@@ -21,6 +25,7 @@ const Home = () => {
             gsap.to(panelRef.current, {
                 height: '70%',
                 padding: 24,
+                paddingTop: 0,
                 duration: 0.5
             })
             gsap.to(panelCloseRef.current, {
@@ -38,6 +43,21 @@ const Home = () => {
             })
         }
     }, [panelOpen]); 
+
+    useGSAP(() => {
+        if(vehiclePanel){
+            gsap.to(vehiclePanelRef.current, {
+                transform: 'translateY(0)',
+                duration: 0.5
+            })
+        }
+        else{
+            gsap.to(vehiclePanelRef.current, {
+                transform: 'translateY(100%)',
+                duration: 0.5
+            })
+        }
+    }, [vehiclePanel]);
 
     return(
         <div className="h-screen relative overflow-hidden">
@@ -57,36 +77,41 @@ const Home = () => {
                     <form onSubmit={(e) => {
                         submitHandler(e)
                     }}>
-                    <div className="absolute top-[46%] left-7 flex flex-col items-center">
-                        <div className="w-4 h-4 bg-green-600 rounded-full border-3"></div>
-                        <div className="h-10 w-1 bg-gray-800 rounded-full "></div>
-                        <div className="w-4 h-4 bg-red-600 rounded-full border-3"></div>
-                    </div>
-                        {/* <div className="line absolute h-16 w-1 top-[47%] left-10 bg-gray-900 rounded-full "></div> */}
+                        <div>
+                            <div className="absolute px-0 py-9 left-7 flex flex-col items-center justify-center">
+                                <div className="w-4 h-4 bg-green-600 rounded-full border-3 border-black shadow-md"></div>
+                                <div className="h-10 w-1 bg-gray-800 rounded-full"></div>
+                                <div className="w-4 h-4 bg-red-600 rounded-full border-3 border-black shadow-md"></div>
+                            </div>
+                            {/* <div className="line absolute h-16 w-1 top-[47%] left-10 bg-gray-900 rounded-full "></div> */}
 
-                        <input
-                         onClick={()=>{
-                            setPanelOpen(true)
-                         }}
-                         value={pickup}
-                         onChange={(e) => 
-                            {setPickup(e.target.value)
-                         }}
-                         className="bg-[#eee] px-8 py-2 text-lg rounded-lg w-full mt-5" type="text" placeholder="Pick-Up Location"/>
-                        <input
-                         onClick={()=>{
-                            setPanelOpen(true)
-                         }}
-                         value={destination}
-                         onChange={(e) => 
-                            {setDestination(e.target.value)
-                         }}
-                        className="bg-[#eee] px-8 py-2 text-lg rounded-lg w-full mt-3" type="text" placeholder="Drop-off Location"/>
+                            <input
+                            onClick={()=>{
+                                setPanelOpen(true)
+                            }}
+                            value={pickup}
+                            onChange={(e) => 
+                                {setPickup(e.target.value)
+                            }}
+                            className="bg-[#eee] px-8 py-2 text-lg rounded-lg w-full mt-5" type="text" placeholder="Pick-Up Location"/>
+                            <input
+                            onClick={()=>{
+                                setPanelOpen(true)
+                            }}
+                            value={destination}
+                            onChange={(e) => 
+                                {setDestination(e.target.value)
+                            }}
+                            className="bg-[#eee] px-8 py-2 text-lg rounded-lg w-full mt-4" type="text" placeholder="Drop-off Location"/>
+                        </div>
                     </form>
                 </div>
                 <div ref={panelRef} className="h-0 bg-white ">
-                    <LocationSearchPanel/>
+                    <LocationSearchPanel setPanelOpen={setPanelOpen} setVehiclePanel={setVehiclePanel}/>
                 </div>
+            </div>
+            <div ref={vehiclePanelRef} className="fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-8">
+                <VehiclePanel setVehiclePanel={setVehiclePanel}/>
             </div>
         </div>
     )
