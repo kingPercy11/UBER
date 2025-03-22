@@ -9,7 +9,9 @@ const VehiclePanel = (props) => {
                 }
             }><i className="ri-arrow-down-wide-fill"></i></h5>
             <h3 className=" text-2xl font-semibold mb-5">Choose your ride</h3>
-            <div className="flex w-full border-2 border-gray-200 active:border-black rounded-2xl item-center justify-between p-3 mb-2">
+            <div onClick={()=>{
+                props.setconfirmRidePanel(true)
+            }} className="flex w-full border-2 border-gray-200 active:border-black rounded-2xl item-center justify-between p-3 mb-2">
                     <img className="h-12" src="https://swyft.pl/wp-content/uploads/2023/05/how-many-people-can-a-uberx-take.jpg" alt="" />
                     <div className="w-1/2">
                         <h4 className="font-medium text-base">RideOD <span><i className="ri-user-3-fill"/>4</span></h4>
@@ -20,7 +22,9 @@ const VehiclePanel = (props) => {
                         ₹200
                     </h2>
             </div>
-            <div className="flex w-full border-2 border-gray-200 active:border-black rounded-2xl item-center justify-between p-3 mb-2">
+            <div  onClick={()=>{
+                props.setconfirmRidePanel(true)
+            }} className="flex w-full border-2 border-gray-200 active:border-black rounded-2xl item-center justify-between p-3 mb-2">
                     <img className="h-12" src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_638,w_956/v1649231091/assets/2c/7fa194-c954-49b2-9c6d-a3b8601370f5/original/Uber_Moto_Orange_312x208_pixels_Mobile.png" alt="" />
                     <div className="w-1/2">
                         <h4 className="font-medium text-base">BikeOD <span><i className="ri-user-3-fill"/>1</span></h4>
@@ -31,7 +35,9 @@ const VehiclePanel = (props) => {
                         ₹50
                     </h2>
             </div>
-            <div className="flex w-full border-2 border-gray-200 active:border-black rounded-2xl item-center justify-between p-3 mb-2">
+            <div onClick={()=>{
+                props.setconfirmRidePanel(true)
+            }}  className="flex w-full border-2 border-gray-200 active:border-black rounded-2xl item-center justify-between p-3 mb-2">
                     <img className="h-12" src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_368,w_552/v1648431773/assets/1d/db8c56-0204-4ce4-81ce-56a11a07fe98/original/Uber_Auto_558x372_pixels_Desktop.png" alt="" />
                     <div className="w-1/2">
                         <h4 className="font-medium text-base">AutoOD <span><i className="ri-user-3-fill"/>3</span></h4>

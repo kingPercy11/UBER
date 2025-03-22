@@ -11,6 +11,7 @@ import DriverProtectWrapper from "./pages/DriverProtectWrapper"
 import UserLogout from "./pages/UserLogout"
 import DriverLogout from "./pages/DriverLogout"
 import DriverHome from "./pages/DriverHome"
+import Riding from "./pages/Riding"
 
 // import { UserDataContext } from "./context/UserContext"
 
@@ -20,6 +21,7 @@ const App = () => {
         <Routes>
             <Route path="/" element={<Start/>} />
             <Route path="/login" element={<UserLogin />} />
+            <Route path="/riding" element={<Riding/>} />
             <Route path="/signup" element={<UserSignup />} />
             <Route path="/driver-signup" element={<DriverSignup />} />
             <Route path="/driver-login" element={<DriverLogin/>} />
