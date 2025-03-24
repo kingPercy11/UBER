@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 const Riding = (props) => {
     return(
         <div className="h-screen">
-            <Link to='/home' className="fixed h-10 w-10 bg-amber-400 rounded-full flex items-center justify-center top-2 right-2">
+            {/*bg-amber-400*/}
+            <Link to='/home' className="fixed h-10 w-10 bg-white rounded-full flex items-center justify-center top-2 right-2">
                 <i className=" text-2xl font-semibold ri-home-4-line"/>
             </Link>
             <div className="h-1/2">
@@ -14,9 +15,9 @@ const Riding = (props) => {
                 <div className='flex items-center justify-between'>
                     <img className='h-12' src="https://swyft.pl/wp-content/uploads/2023/05/how-many-people-can-a-uberx-take.jpg" alt="" />
                     <div className='text-right'>
-                        <h2 className='text-lg font-medium capitalize'>Raj</h2>
-                        <h4 className='text-xl font-semibold -mt-1 -mb-1'>MH 05 AB 1223</h4>
-                        <p className='text-sm text-gray-600'>Maruti Swift Desire</p>
+                        <h2 className='text-lg font-medium capitalize'>Driver Name</h2>
+                        <h4 className='text-xl font-semibold -mt-1 -mb-1'>Numebr Plate</h4>
+                        <p className='text-sm text-gray-600'>Car Name</p>
                         {/* <h1 className='text-lg font-semibold'>  </h1> */}
                     </div>
                 </div>

@@ -33,7 +33,7 @@ const UserSignup = () => {
     if(response.status === 201){
       const user= response.data
       setUser(user)
-      localStorage.setItem('token', data.token)
+      localStorage.setItem('token', user.token)
       navigate('/home')
     }
 
