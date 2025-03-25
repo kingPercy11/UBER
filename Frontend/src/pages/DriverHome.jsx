@@ -16,7 +16,7 @@ const DriverHome = ()=>{
             <div className="h-2/5 p-6">
                 <DriverDetails/>
             </div>
-            <div className="fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-6 pt-12">
+            <div className="fixed w-full z-10 bottom-0 {/*translate-y-full*/} bg-white px-3 py-6 pt-12">
                 <RidePopUp/>
             </div>
         </div>

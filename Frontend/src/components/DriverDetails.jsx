@@ -38,4 +38,4 @@ return (
   </div>
 )}
 
-export default DriverDetails;
+export default DriverDetails
