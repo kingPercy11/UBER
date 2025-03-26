@@ -5,6 +5,7 @@ const Riding = (props) => {
     return(
         <div className="h-screen">
             {/*bg-amber-400*/}
+            <img className='w-16 absolute left-5 top-5' src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" alt="" />
             <Link to='/home' className="fixed h-10 w-10 bg-white rounded-full flex items-center justify-center top-2 right-2">
                 <i className=" text-2xl font-semibold ri-home-4-line"/>
             </Link>
@@ -32,7 +33,7 @@ const Riding = (props) => {
                             </div>
                         </div>
                         <div className="flex items-center gap-5 p-3 ">
-                            <i class="text-xl ri-money-rupee-circle-fill"></i>
+                            <i className="text-xl ri-money-rupee-circle-fill"></i>
                             <div>
                                 <h3 className="text-lg font-medium">₹200</h3>
                                 <p className="text-sm -mt-1 text-gray-600">Cash</p>

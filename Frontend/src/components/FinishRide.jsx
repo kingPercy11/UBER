@@ -1,13 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const RidePopUp = (props) => {
-return (
-    <div>
+const FinishRide = (props) => {
+    return(
+        <div> 
         <h5 className="p-1 text-center w-[93%] absolute top-0" onClick={()=>{
-            props.setRidePopUpPanel(false)
+            props.setfinishRidePanel(false)
         }}><i className="text-4xl text-gray-300 ri-arrow-down-wide-fill"></i></h5>
 
-        <h3 className="text-2xl font-semibold mb-5">New Ride near You!</h3>
+        <h3 className="text-2xl font-semibold mb-5">Complete this ride</h3>
 
         <div className="flex items-center justify-between p-3 bg-amber-400 rounded-2xl mt-4">
             <div className="flex items-center justify-between gap-3">
@@ -29,16 +30,10 @@ return (
         <div className="flex gap-2 justify-between flex-col items-center px-3"> 
             <div className="w-full mt-5">
                 <div className="flex items-center gap-5 p-3 border-gray-300 border-b-2 ">
-                    <i className="text-green-700 text-xl ri-map-pin-user-fill"></i>
-                    <div>
-                        <h3 className="text-lg font-medium">Delhi Technological University</h3>
-                        <p className="text-sm -mt-1 text-gray-600">Delhi-110042</p>
-                    </div>
-                </div>
-                <div className="flex items-center gap-5 p-3 border-gray-300 border-b-2 ">
                     <i className="text-red-700 text-xl ri-map-pin-2-fill"></i>
                     <div>
-                        <h3 className="text-lg font-medium">Delhi Technological University</h3>
+                        <h3 className="text-lg font-bold">Destination Arrived</h3>
+                        <h4 className="text-lg font-medium">Delhi Technological University</h4>
                         <p className="text-sm -mt-1 text-gray-600">Delhi-110042</p>
                     </div>
                 </div>
@@ -47,21 +42,18 @@ return (
                     <div>
                         <h3 className="text-lg font-medium">₹200</h3>
                         <p className="text-sm -mt-1 text-gray-600">Cash</p>
+                        <p className="text-xs -mt-1 text-gray-400">Collect the payment before finishing the ride</p>
                     </div>
                 </div>
 
             </div>
-            <div className="w-full flex flex-row gap-3 ">
+            <div className="w-screen px-6">
                 <button onClick={()=>{
-                    props.setConfirmRidePopUpPanel(true)
-                    props.setRidePopUpPanel(false)
-                }} className="w-full h-11 mt-2 bg-green-500 text-white font-semibold rounded-2xl">Accept</button>
-                <button onClick={()=>{
-                    props.setRidePopUpPanel(false)
-                }} className="w-full h-11 mt-2 bg-red-500 text-white font-semibold rounded-2xl">Ignore</button>
+                    props.setfinishRidePanel(false)
+                }} className="w-full h-11 mt-2 bg-green-500 text-white font-semibold rounded-2xl">Finish Ride</button>
             </div>
         </div>
-    </div>
-)}
-
-export default RidePopUp
+        </div>
+    )
+}
+export default FinishRide

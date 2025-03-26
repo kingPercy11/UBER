@@ -13,6 +13,7 @@ import DriverLogout from "./pages/DriverLogout"
 import DriverHome from "./pages/DriverHome"
 import Riding from "./pages/Riding"
 import DriverRiding from "./pages/DriverRiding"
+import 'remixicon/fonts/remixicon.css'
 
 // import { UserDataContext } from "./context/UserContext"
 
@@ -22,8 +23,18 @@ const App = () => {
         <Routes>
             <Route path="/" element={<Start/>} />
             <Route path="/login" element={<UserLogin />} />
-            <Route path="/riding" element={<Riding/>} />
-            <Route path="/driver-riding" element={<DriverRiding/>} />
+            <Route path="/riding" 
+            element={
+              <UserProtectWrapper>
+                <Riding/>
+              </UserProtectWrapper>
+            } />
+            <Route path="/driver-riding" 
+            element={
+              <DriverProtectWrapper>
+                <DriverRiding/>
+              </DriverProtectWrapper>
+            } />
             <Route path="/signup" element={<UserSignup />} />
             <Route path="/driver-signup" element={<DriverSignup />} />
             <Route path="/driver-login" element={<DriverLogin/>} />
