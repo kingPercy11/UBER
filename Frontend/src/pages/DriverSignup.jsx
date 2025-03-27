@@ -56,13 +56,13 @@ const DriverSignup = () => {
         <div> 
             <div className='px-5 py-5 h-screen flex flex-col justify-between'>
                 <div>
-                    <img className='w-16 mb-10' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYQy-OIkA6In0fTvVwZADPmFFibjmszu2A0g&s" alt="" />
+                    <img className='w-16 mb-8' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYQy-OIkA6In0fTvVwZADPmFFibjmszu2A0g&s" alt="" />
                     <form onSubmit={(e) => {
                         submitHandler(e)
                     }}>
 
                         <h3 className='text-lg w-1/2  font-medium mb-2'>What's your name</h3>
-                        <div className='flex gap-4 mb-7'>
+                        <div className='flex gap-4 mb-5'>
                         <input
                             required
                             className='bg-[#eeeeee] w-1/2 rounded-lg px-4 py-2 border  text-lg placeholder:text-base'
@@ -92,7 +92,7 @@ const DriverSignup = () => {
                         onChange={(e) => {
                             setEmail(e.target.value)
                         }}
-                        className='bg-[#eeeeee] mb-7 rounded-lg px-4 py-2 border w-full text-lg placeholder:text-base'
+                        className='bg-[#eeeeee] mb-5 rounded-lg px-4 py-2 border w-full text-lg placeholder:text-base'
                         type="email"
                         placeholder='email@example.com'
                         />
@@ -100,7 +100,7 @@ const DriverSignup = () => {
                         <h3 className='text-lg font-medium mb-2'>Enter Password</h3>
 
                         <input
-                        className='bg-[#eeeeee] mb-7 rounded-lg px-4 py-2 border w-full text-lg placeholder:text-base'
+                        className='bg-[#eeeeee] mb-5 rounded-lg px-4 py-2 border w-full text-lg placeholder:text-base'
                         value={password}
                         onChange={(e) => {
                             setPassword(e.target.value)
@@ -109,7 +109,7 @@ const DriverSignup = () => {
                         placeholder='password'
                         />
                         <h3 className='text-lg font-medium mb-2'>Vehicle Information</h3>
-                        <div className='flex gap-4 mb-7'>
+                        <div className='flex gap-4 mb-5'>
                             <input
                             required
                             className='bg-[#eeeeee] w-1/2 rounded-lg px-4 py-2 border text-lg placeholder:text-base'
@@ -131,7 +131,7 @@ const DriverSignup = () => {
                             }}
                             />
                         </div>
-                        <div className='flex gap-4 mb-7'>
+                        <div className='flex gap-4 mb-5'>
                             <input
                             required
                             className='bg-[#eeeeee] w-1/2 rounded-lg px-4 py-2 border text-lg placeholder:text-base'
@@ -150,14 +150,14 @@ const DriverSignup = () => {
                                 setVehicleType(e.target.value)
                             }}
                             >
-                            <option value="" disabled>Select Vehicle Type</option>
+                            <option className="bg-[#eeeeee]" value="" disabled>Select Vehicle Type</option>
                             <option value="car">Car</option>
                             <option value="auto">Auto</option>
-                            <option value="motorcycle">Moto</option>
+                            <option value="motorcycle">Bike</option>
                             </select>
                         </div>
                         <button
-                        className='bg-[#111] text-white font-semibold mb-3 rounded-lg px-4 py-2 w-full text-lg placeholder:text-base'
+                        className='bg-[#111] text-white font-semibold mb-2 rounded-lg px-4 py-2 w-full text-lg placeholder:text-base'
                         >Create account</button>
 
                     </form>
