@@ -1,6 +1,8 @@
 import React from "react";
 
 const VehiclePanel = (props) => {
+    const fare = props.fare || { car: 0, moto: 0, auto: 0 }; // Default values for fare
+
     return(
         <div>
             <h5 className='absolute px-3 items-center text-center w-[93%] top-0 text-4xl text-gray-300' onClick={
@@ -19,7 +21,7 @@ const VehiclePanel = (props) => {
                         <p className="font-normal text-xs text-gray-600">Affordable, compact rides</p>
                     </div>
                     <h2 className="text-lg font-semibold">
-                        ₹200
+                        ₹ {fare.car}
                     </h2>
             </div>
             <div  onClick={()=>{
@@ -32,7 +34,7 @@ const VehiclePanel = (props) => {
                         <p className="font-normal text-xs text-gray-600">2-wheeler rides</p>
                     </div>
                     <h2 className="text-lg font-semibold">
-                        ₹50
+                        ₹ {fare.moto}
                     </h2>
             </div>
             <div onClick={()=>{
@@ -45,7 +47,7 @@ const VehiclePanel = (props) => {
                         <p className="font-normal text-xs text-gray-600">Auto-rickshaw rides</p>
                     </div>
                     <h2 className="text-lg font-semibold">
-                        ₹100
+                        ₹ {fare.auto}
                     </h2>
             </div>
         </div>
