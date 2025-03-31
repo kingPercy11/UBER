@@ -4,7 +4,7 @@ const WaitingForDriver = (props) => {
   return (
     <div>
       <h5 className='p-1 text-center w-[93%] absolute top-0' onClick={() => {
-        props.waitingForDriver(false)
+        props. setWaitingForDriver(false)
       }}><i className="text-3xl text-gray-200 ri-arrow-down-wide-line"></i></h5>
 
       <div className='flex items-center justify-between'>
@@ -18,30 +18,38 @@ const WaitingForDriver = (props) => {
       </div>
 
       <div className='flex gap-2 justify-between flex-col items-center'>
-        <div className="w-full mt-5">
-            <div className="flex items-center gap-5 p-3 border-gray-300 border-b-2 ">
-                <i className="text-green-700 text-xl ri-map-pin-user-fill"></i>
-                <div>
-                    <h3 className="text-lg font-medium">Delhi Technological University</h3>
-                    <p className="text-sm -mt-1 text-gray-600">Delhi-110042</p>
-                </div>
-            </div>
-            <div className="flex items-center gap-5 p-3 border-gray-300 border-b-2 ">
-                <i className="text-red-700 text-xl ri-map-pin-2-fill"></i>
-                <div>
-                    <h3 className="text-lg font-medium">Delhi Technological University</h3>
-                    <p className="text-sm -mt-1 text-gray-600">Delhi-110042</p>
-                </div>
-            </div>
-            <div className="flex items-center gap-5 p-3 ">
-                <i className="text-xl ri-money-rupee-circle-fill"></i>
-                <div>
-                    <h3 className="text-lg font-medium">₹200</h3>
-                    <p className="text-sm -mt-1 text-gray-600">Cash</p>
-                </div>
-            </div>
+      <div className="w-full mt-2">
+                    <div className="flex items-center gap-5 p-3 border-gray-300 border-b-2 ">
+                        <i className="text-green-700 text-xl ri-map-pin-user-fill"></i>
+                        <div>
+                            <h3 className="text-lg font-medium">
+                                {props.pickup.length > 30 ? `${props.pickup.slice(0, 30)}...` : props.pickup}
+                            </h3>
+                            <p className="text-sm -mt-1 text-gray-500">
+                                {props.pickup.includes(",") ? props.pickup.split(",").slice(-2).join(",").trim() : ""}
+                            </p>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-5 p-3 border-gray-300 border-b-2 ">
+                        <i className="text-red-700 text-xl ri-map-pin-2-fill"></i>
+                        <div>
+                            <h3 className="text-lg font-medium">
+                                {props.destination.length > 30 ? `${props.destination.slice(0, 30)}...` : props.destination}
+                            </h3>
+                            <p className="text-sm -mt-1 text-gray-500">
+                                {props.destination.includes(",") ? props.destination.split(",").slice(-1).join(",").trim() : ""}
+                            </p>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-5 p-3 ">
+                        <i className="text-xl ri-money-rupee-circle-fill"></i>
+                        <div>
+                            <h3 className="text-lg font-medium">₹{props.fare[props.vehicleType]}</h3>
+                            <p className="text-sm -mt-1 text-gray-500">Cash</p>
+                        </div>
+                    </div>
 
-        </div>
+                </div>
       </div>
     </div>
   )
