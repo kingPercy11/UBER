@@ -288,7 +288,12 @@ const Home = () => {
                 setVehicleFound={setVehicleFound}/>
             </div>
             <div ref={waitingForDriverRef} className="fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-6 pt-12">
-                <WaitingForDriver setWaitingForDriver={setWaitingForDriver}/>
+                <WaitingForDriver 
+                pickup={pickup}
+                destination={destination}
+                fare={fare}
+                vehicleType={vehicleType}
+                setWaitingForDriver={setWaitingForDriver}/>
             </div>
         </div>
     )
