@@ -7,6 +7,8 @@ import DriverDetails from "../components/DriverDetails";
 import RidePopUp from "../components/RidePopUp";
 import ConfirmRidePopUp from "../components/ConfirmRidePopUp";
 import { useRef } from "react";
+import { useContext} from "react";
+import { DriverDataContext } from "../context/DriverContext";
 
 
 const DriverHome = ()=>{
