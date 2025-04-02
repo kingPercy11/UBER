@@ -1,6 +1,6 @@
 const socketIo = require('socket.io');
 const userModel = require('./models/user.model');
-const captainModel = require('./models/captain.model');
+const driverModel = require('./models/driver.model');
 
 let io;
 
@@ -18,23 +18,23 @@ function initializeSocket(server) {
 
         socket.on('join', async (data) => {
             const { userId, userType } = data;
-
+            console.log('User joined:', userId, userType);
             if (userType === 'user') {
                 await userModel.findByIdAndUpdate(userId, { socketId: socket.id });
-            } else if (userType === 'captain') {
-                await captainModel.findByIdAndUpdate(userId, { socketId: socket.id });
+            } else if (userType === 'driver') {
+                await driverModel.findByIdAndUpdate(userId, { socketId: socket.id });
             }
         });
 
 
-        socket.on('update-location-captain', async (data) => {
+        socket.on('update-location-driver', async (data) => {
             const { userId, location } = data;
 
             if (!location || !location.ltd || !location.lng) {
                 return socket.emit('error', { message: 'Invalid location data' });
             }
 
-            await captainModel.findByIdAndUpdate(userId, {
+            await driverModel.findByIdAndUpdate(userId, {
                 location: {
                     ltd: location.ltd,
                     lng: location.lng

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { use, useState } from "react";
+import { data, Link } from "react-router-dom";
 import {useGSAP} from '@gsap/react'
 import gsap from "gsap"
 import 'remixicon/fonts/remixicon.css'
@@ -7,8 +7,10 @@ import DriverDetails from "../components/DriverDetails";
 import RidePopUp from "../components/RidePopUp";
 import ConfirmRidePopUp from "../components/ConfirmRidePopUp";
 import { useRef } from "react";
-import { useContext} from "react";
+import { useEffect,useContext} from "react";
 import { DriverDataContext } from "../context/DriverContext";
+import { SocketContext } from "../context/SocketContext";
+
 
 
 const DriverHome = ()=>{
@@ -17,6 +19,21 @@ const DriverHome = ()=>{
 
     const ridePopUpPanelRef = useRef(null)
     const ConfirmRidePopUpPanelRef = useRef(null)
+
+    const{socket} = useContext(SocketContext)
+    const{driver} = useContext(DriverDataContext)
+
+    useEffect(() => {
+        socket.emit('join', {
+            userId: driver._id,
+            userType: 'driver'
+        })
+
+        // socket.emit('ride-request', (data) => { 
+        //     console.log(data)
+        //     setRidePopUpPanel(true)
+        // })
+    }, [socket]);
 
     useGSAP(() => {
         if(ridePopUpPanel){
