@@ -7,10 +7,10 @@ const rideSchema = new mongoose.Schema({
         ref: 'user',
         required: true
     },
-    // driver: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'driver',
-    // },
+    driver: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'driver',
+    },
     pickup: {
         type: String,
         required: true,

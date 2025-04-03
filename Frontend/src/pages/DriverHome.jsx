@@ -14,8 +14,9 @@ import { SocketContext } from "../context/SocketContext";
 
 
 const DriverHome = ()=>{
-    const[ridePopUpPanel,setRidePopUpPanel]=useState(true)
+    const[ridePopUpPanel,setRidePopUpPanel]=useState(false)
     const[ConfirmRidePopUpPanel,setConfirmRidePopUpPanel]=useState(false)
+    const [ride, setRide] = useState(null)
 
     const ridePopUpPanelRef = useRef(null)
     const ConfirmRidePopUpPanelRef = useRef(null)
@@ -33,7 +34,60 @@ const DriverHome = ()=>{
         //     console.log(data)
         //     setRidePopUpPanel(true)
         // })
-    }, [socket]);
+        // const updateLocation = () => {
+        //     if(navigator.geolocation){
+        //         navigator.geolocation.getCurrentPosition(position) => { 
+        //             console.log(userId: driver._id,
+        //                 location: {
+        //                     ltd: position.coords.latitude,
+        //                     lng: position.coords.longitude
+        //                 })     
+
+        //             socket.emit('update-location-driver', {
+        //                 userId: driver._id,
+        //                 location: {
+        //                     ltd: position.coords.latitude,
+        //                     lng: position.coords.longitude
+        //                 }   
+        //             })
+        //         }
+        //     }
+        // }
+        const updateLocation = () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position) => { 
+                    console.log({
+                        userId: driver._id,
+                        location: {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        }
+                    });
+        
+                    socket.emit('update-location-driver', {
+                        userId: driver._id,
+                        location: {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        }
+                    });
+                }, 
+                (error) => {
+                    console.error("Error fetching location:", error);
+                });
+            } else {
+                console.error("Geolocation is not supported by this browser.");
+            }
+        };
+        const locationInterval = setInterval(updateLocation, 10000)
+        updateLocation()
+        return () => clearInterval(locationInterval)
+    })
+
+    socket.on('new-ride', (data) => {
+        console.log(data)
+        // setRidePopUpPanel(true)
+    })
 
     useGSAP(() => {
         if(ridePopUpPanel){
@@ -79,7 +133,10 @@ const DriverHome = ()=>{
                 <DriverDetails/>
             </div>
             <div ref={ridePopUpPanelRef} className="fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-6 pt-12">
-                <RidePopUp setRidePopUpPanel={setRidePopUpPanel} setConfirmRidePopUpPanel={setConfirmRidePopUpPanel}/>
+                <RidePopUp 
+                    ride={ride}
+                    setRidePopUpPanel={setRidePopUpPanel} 
+                    setConfirmRidePopUpPanel={setConfirmRidePopUpPanel}/>
             </div>
             <div ref={ConfirmRidePopUpPanelRef} className="fixed w-full h-screen z-10 bottom-0 translate-y-full bg-white px-3 py-6 pt-12">
                 <ConfirmRidePopUp setConfirmRidePopUpPanel={setConfirmRidePopUpPanel}  setRidePopUpPanel={setRidePopUpPanel}/>

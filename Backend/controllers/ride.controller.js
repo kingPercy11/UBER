@@ -1,8 +1,10 @@
 const rideService = require('../services/ride.service');
 const { validationResult } = require('express-validator');
 const mapService = require('../services/maps.services');
-// const { sendMessageToSocketId } = require('../socket');
+const { sendMessageToSocketId } = require('../socket');
 const rideModel = require('../models/ride.model');
+const socket = require('../socket');
+
 
 
 module.exports.createRide = async (req, res) => {
@@ -13,36 +15,32 @@ module.exports.createRide = async (req, res) => {
 
     const { userId, pickup, destination, vehicleType } = req.body;
 
-    try {
-        const ride = await rideService.createRide({ user: req.user._id, pickup, destination, vehicleType });
-        res.status(201).json(ride);
+    (async () => {
+        try {
+            const ride = await rideService.createRide({ user: req.user._id, pickup, destination, vehicleType });
+            res.status(201).json(ride);
 
-        // const pickupCoordinates = await mapService.getAddressCoordinate(pickup);
+            const pickupCoordinates = await mapService.getAddressCoordinates(pickup);
+            console.log(pickupCoordinates);
 
+            const driversInRadius = await mapService.getDriversInRadius(pickupCoordinates.lat, pickupCoordinates.lng, 2); // Fixed property names
+            console.log(driversInRadius);
+            ride.otp =""
+            const rideWithUser = await rideModel.findOne({ _id: ride._id }).populate('user');
+            driversInRadius.map(driver => {
+                sendMessageToSocketId(driver.socketId, {
+                    event: 'new-ride',
+                    data: rideWithUser
+                })
+            })
 
-
-        // const driversInRadius = await mapService.getDriversInTheRadius(pickupCoordinates.ltd, pickupCoordinates.lng, 2);
-
-        // ride.otp = ""
-
-        // const rideWithUser = await rideModel.findOne({ _id: ride._id }).populate('user');
-
-        // driversInRadius.map(captain => {
-
-        //     sendMessageToSocketId(captain.socketId, {
-        //         event: 'new-ride',
-        //         data: rideWithUser
-        //     })
-
-        // })
-
-    } catch (err) {
-
-        // console.log(err);
-        return res.status(500).json({ message: err.message });
-    }
-
+        } catch (err) {
+            console.error(err);
+        }
+    })();
 };
+
+
 
 module.exports.getFare = async (req, res) => {
     const errors = validationResult(req);

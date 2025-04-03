@@ -50,7 +50,7 @@ const Home = () => {
 
     const handlePickupChange = async (e) => {
         setPickup(e.target.value)
-        setPickupError(false); // Reset error when pickup is updated
+        setPickupError(false); 
         try {
             const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-suggestions`, {
                 params: { input: e.target.value },
@@ -67,7 +67,7 @@ const Home = () => {
     const handleDestinationChange = async (e) => {
         if (!pickup) {
             setPickupError(true);
-            return; // Prevent destination input if pickup is empty
+            return; 
         }
         setDestination(e.target.value)
         try {

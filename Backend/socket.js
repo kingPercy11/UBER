@@ -30,13 +30,13 @@ function initializeSocket(server) {
         socket.on('update-location-driver', async (data) => {
             const { userId, location } = data;
 
-            if (!location || !location.ltd || !location.lng) {
+            if (!location || !location.lat || !location.lng) { // Changed 'ltd' to 'lat'
                 return socket.emit('error', { message: 'Invalid location data' });
             }
 
             await driverModel.findByIdAndUpdate(userId, {
                 location: {
-                    ltd: location.ltd,
+                    lat: location.lat, // Changed 'ltd' to 'lat'
                     lng: location.lng
                 }
             });
