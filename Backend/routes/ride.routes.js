@@ -20,5 +20,14 @@ router.get('/get-fare',
     rideController.getFare
 )
 
+// console.log("hi4");
+router.post('/confirm',
+    authMiddleware.authDriver,
+    body('rideId').isMongoId().withMessage('Invalid ride ID'),
+    // body('otp').isString().isLength({ min: 6, max:6 }).withMessage('Invalid OTP'),
+    rideController.confirmRide
+)
+// console.log("hi3") 
+
 
 module.exports = router;

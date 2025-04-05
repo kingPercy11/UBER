@@ -23,7 +23,7 @@ const ConfirmRidePopUp = (props) => {
                 <img className="h-12 w-12 rounded-full object-cover" src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR3EWZa4oa8_4WRE58cC6iXT8hGDGy1kqDG0oHHQNHRSpCatkWi9aXNImPnvGyl_pG-E4cFBwd2zx2_okJIjQYd4qQE9YO7jIyUhmDCvA" alt="" />
                 <div className="flex flex-col">
                     <h2 className="text-lg font-medium ">
-                        <i className="font-bold text-lg ri-user-3-fill"></i> User Name
+                        <i className="font-bold text-lg ri-user-3-fill"></i> {props.ride?.user.fullname.firstname}
                     </h2>
                     <h3 className="text-sm font-medium text-gray-800"><i className=" text-black font-bold text-lg ri-phone-fill"></i> +91 1234567890
                     </h3>
@@ -37,26 +37,34 @@ const ConfirmRidePopUp = (props) => {
         </div>        
         <div className="flex gap-2 justify-between flex-col items-center px-3"> 
             <div className="w-full mt-5">
-                <div className="flex items-center gap-5 p-3 border-gray-300 border-b-2 ">
-                    <i className="text-green-700 text-xl ri-map-pin-user-fill"></i>
-                    <div>
-                        <h3 className="text-lg font-medium">Delhi Technological University</h3>
-                        <p className="text-sm -mt-1 text-gray-600">Delhi-110042</p>
+            <div className="flex items-center gap-5 p-3 border-gray-300 border-b-2 ">
+                        <i className="text-green-700 text-xl ri-map-pin-user-fill"></i>
+                        <div>
+                            <h3 className="text-lg font-medium">
+                                {props.ride?.pickup.length > 30 ? `${props.ride?.pickup.slice(0, 30)}...` : props.ride?.pickup}
+                            </h3>
+                            <p className="text-sm -mt-1 text-gray-500">
+                                {props.ride?.pickup.includes(",") ? props.ride?.pickup.split(",").slice(-2).join(",").trim() : ""}
+                            </p>
+                        </div>
                     </div>
-                </div>
-                <div className="flex items-center gap-5 p-3 border-gray-300 border-b-2 ">
-                    <i className="text-red-700 text-xl ri-map-pin-2-fill"></i>
-                    <div>
-                        <h3 className="text-lg font-medium">Delhi Technological University</h3>
-                        <p className="text-sm -mt-1 text-gray-600">Delhi-110042</p>
+                    <div className="flex items-center gap-5 p-3 border-gray-300 border-b-2 ">
+                        <i className="text-red-700 text-xl ri-map-pin-2-fill"></i>
+                        <div>
+                            <h3 className="text-lg font-medium">
+                                {props.ride?.destination.length > 30 ? `${props.ride?.destination.slice(0, 30)}...` : props.ride?.destination}
+                            </h3>
+                            <p className="text-sm -mt-1 text-gray-500">
+                                {props.ride?.destination.includes(",") ? props.ride?.destination.split(",").slice(-1).join(",").trim() : ""}
+                            </p>
+                        </div>
                     </div>
-                </div>
-                <div className="flex items-center gap-5 p-3 ">
-                    <i className="text-xl ri-money-rupee-circle-fill"></i>
-                    <div>
-                        <h3 className="text-lg font-medium">₹200</h3>
-                        <p className="text-sm -mt-1 text-gray-600">Cash</p>
-                    </div>
+                    <div className="flex items-center gap-5 p-3 ">
+                        <i className="text-xl ri-money-rupee-circle-fill"></i>
+                        <div>
+                            <h3 className="text-lg font-medium">₹{props.ride?.fare[props.vehicleType]}</h3>
+                            <p className="text-sm -mt-1 text-gray-500">Cash</p>
+                        </div>
                 </div>
 
             </div>

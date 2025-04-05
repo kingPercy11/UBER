@@ -1,4 +1,4 @@
-import React, { use, useState } from "react";
+import React, {useState } from "react";
 import { data, Link } from "react-router-dom";
 import {useGSAP} from '@gsap/react'
 import gsap from "gsap"
@@ -10,6 +10,7 @@ import { useRef } from "react";
 import { useEffect,useContext} from "react";
 import { DriverDataContext } from "../context/DriverContext";
 import { SocketContext } from "../context/SocketContext";
+import axios from "axios";
 
 
 
@@ -30,39 +31,16 @@ const DriverHome = ()=>{
             userType: 'driver'
         })
 
-        // socket.emit('ride-request', (data) => { 
-        //     console.log(data)
-        //     setRidePopUpPanel(true)
-        // })
-        // const updateLocation = () => {
-        //     if(navigator.geolocation){
-        //         navigator.geolocation.getCurrentPosition(position) => { 
-        //             console.log(userId: driver._id,
-        //                 location: {
-        //                     ltd: position.coords.latitude,
-        //                     lng: position.coords.longitude
-        //                 })     
-
-        //             socket.emit('update-location-driver', {
-        //                 userId: driver._id,
-        //                 location: {
-        //                     ltd: position.coords.latitude,
-        //                     lng: position.coords.longitude
-        //                 }   
-        //             })
-        //         }
-        //     }
-        // }
         const updateLocation = () => {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition((position) => { 
-                    console.log({
-                        userId: driver._id,
-                        location: {
-                            lat: position.coords.latitude,
-                            lng: position.coords.longitude
-                        }
-                    });
+                    // console.log({
+                    //     userId: driver._id,
+                    //     location: {
+                    //         lat: position.coords.latitude,
+                    //         lng: position.coords.longitude
+                    //     }
+                    // });
         
                     socket.emit('update-location-driver', {
                         userId: driver._id,
@@ -70,7 +48,7 @@ const DriverHome = ()=>{
                             lat: position.coords.latitude,
                             lng: position.coords.longitude
                         }
-                    });
+                    })
                 }, 
                 (error) => {
                     console.error("Error fetching location:", error);
@@ -81,13 +59,33 @@ const DriverHome = ()=>{
         };
         const locationInterval = setInterval(updateLocation, 10000)
         updateLocation()
-        return () => clearInterval(locationInterval)
-    })
+        // return () => clearInterval(locationInterval)
+    },[])
 
     socket.on('new-ride', (data) => {
-        console.log(data)
-        // setRidePopUpPanel(true)
+
+        setRide(data)
+        setRidePopUpPanel(true)
+
     })
+
+    async function confirmRide() {
+        console.log("Driver object at confirmRide:", driver);
+        console.log("Ride object at confirmRide:", ride);
+        console.log("Token:", localStorage.getItem('driver-token'));
+            const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/confirm`, {
+                rideId: ride._id,
+                driver: driver
+                
+                // otp: ride.otp // Include the OTP as required by the backend
+            }, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('driver-token')}`
+                }
+            });
+            setRidePopUpPanel(false);
+            setConfirmRidePopUpPanel(true);
+    }
 
     useGSAP(() => {
         if(ridePopUpPanel){
@@ -136,10 +134,15 @@ const DriverHome = ()=>{
                 <RidePopUp 
                     ride={ride}
                     setRidePopUpPanel={setRidePopUpPanel} 
-                    setConfirmRidePopUpPanel={setConfirmRidePopUpPanel}/>
+                    setConfirmRidePopUpPanel={setConfirmRidePopUpPanel}
+                    confirmRide={confirmRide}
+                />
             </div>
             <div ref={ConfirmRidePopUpPanelRef} className="fixed w-full h-screen z-10 bottom-0 translate-y-full bg-white px-3 py-6 pt-12">
-                <ConfirmRidePopUp setConfirmRidePopUpPanel={setConfirmRidePopUpPanel}  setRidePopUpPanel={setRidePopUpPanel}/>
+                <ConfirmRidePopUp
+                    ride={ride}
+                    setConfirmRidePopUpPanel={setConfirmRidePopUpPanel}  
+                    setRidePopUpPanel={setRidePopUpPanel}/>
             </div>
         </div>
     )

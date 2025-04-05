@@ -37,6 +37,7 @@ const Home = () => {
     const [vehicleType, setVehicleType] = useState(null)
     const {socket } = React.useContext(SocketContext);
     const { user } = useContext(UserDataContext)
+    const [ride, setRide] = useState(null)
 
 
     const submitHandler = (e) => {  
@@ -47,6 +48,13 @@ const Home = () => {
         socket.emit("join", { userType:"user",userId:user._id })
         console.log(user)
     },[user])
+
+
+    socket.on('ride-confirmed', ride => {
+        setVehicleFound(false)
+        setWaitingForDriver(true)
+        setRide(ride)
+    })
 
     const handlePickupChange = async (e) => {
         setPickup(e.target.value)
@@ -193,7 +201,7 @@ const Home = () => {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
         })
-        console.log(response.data)
+        // console.log(response.data)
     }
 
     return(
@@ -298,6 +306,7 @@ const Home = () => {
             </div>
             <div ref={waitingForDriverRef} className="fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-6 pt-12">
                 <WaitingForDriver 
+                ride={ride} 
                 pickup={pickup}
                 destination={destination}
                 fare={fare}

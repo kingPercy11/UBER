@@ -21,7 +21,7 @@ return (
                 </div>
 
             </div>
-
+{/* //update the distance and duration */}
             <h5 className="text-lg font-semibold">
                 2.2 KM 
             </h5>
@@ -31,15 +31,23 @@ return (
                 <div className="flex items-center gap-5 p-3 border-gray-300 border-b-2 ">
                     <i className="text-green-700 text-xl ri-map-pin-user-fill"></i>
                     <div>
-                        <h3 className="text-lg font-medium">{props.ride?.pickup}</h3>
-                        <p className="text-sm -mt-1 text-gray-600">Delhi-110042</p>
+                            <h3 className="text-lg font-medium">
+                                {props.ride?.pickup.length > 30 ? `${props.ride?.pickup.slice(0, 30)}...` : props.ride?.pickup}
+                            </h3>
+                            <p className="text-sm -mt-1 text-gray-500">
+                                {props.ride?.pickup.includes(",") ? props.ride?.pickup.split(",").slice(-2).join(",").trim() : ""}
+                            </p>
                     </div>
                 </div>
                 <div className="flex items-center gap-5 p-3 border-gray-300 border-b-2 ">
                     <i className="text-red-700 text-xl ri-map-pin-2-fill"></i>
                     <div>
-                        <h3 className="text-lg font-medium">{props.ride?.destination}</h3>
-                        <p className="text-sm -mt-1 text-gray-600">Delhi-110042</p>
+                            <h3 className="text-lg font-medium">
+                                {props.ride?.destination.length > 30 ? `${props.ride?.destination.slice(0, 30)}...` : props.ride?.destination}
+                            </h3>
+                            <p className="text-sm -mt-1 text-gray-500">
+                                {props.ride?.destination.includes(",") ? props.ride?.destination.split(",").slice(-2).join(",").trim() : ""}
+                            </p>
                     </div>
                 </div>
                 <div className="flex items-center gap-5 p-3 ">
@@ -55,6 +63,8 @@ return (
                 <button onClick={()=>{
                     props.setConfirmRidePopUpPanel(true)
                     props.setRidePopUpPanel(false)
+                    props.confirmRide()
+                    
                 }} className="w-full h-11 mt-2 bg-green-500 text-white font-semibold rounded-2xl">Accept</button>
                 <button onClick={()=>{
                     props.setRidePopUpPanel(false)

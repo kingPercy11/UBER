@@ -65,7 +65,7 @@ module.exports.createRide = async ({
 
 
 
-    const ride = rideModel.create({
+    const ride = await rideModel.create({
         user,
         pickup,
         destination,
@@ -76,31 +76,42 @@ module.exports.createRide = async ({
     return ride;
 }
 
-// module.exports.confirmRide = async ({
-//     rideId, driver
-// }) => {
-//     if (!rideId) {
-//         throw new Error('Ride id is required');
-//     }
+module.exports.confirmRide = async ({
+    rideId, driver
+}) => {
+    if (!rideId) {
+        console.log("Ride ID is missing");
+        throw new Error('Ride id is required');
+    }
+    console.log("hi7");
 
-//     await rideModel.findOneAndUpdate({
-//         _id: rideId
-//     }, {
-//         status: 'accepted',
-//         driver: driver._id
-//     })
+    if (!driver || !driver._id) {
+        console.log("Driver object is invalid:", driver);
+        throw new Error('Driver is required');
+    }
 
-//     const ride = await rideModel.findOne({
-//         _id: rideId
-//     }).populate('user').populate('driver').select('+otp');
+    await rideModel.findOneAndUpdate(
+        { _id: rideId },
+        {
+            status: 'accepted',
+            driver: driver._id
+        }
+    );
 
-//     if (!ride) {
-//         throw new Error('Ride not found');
-//     }
+    const ride = await rideModel.findOne({ _id: rideId })
+        .populate('user')
+        .populate('driver')
+        .select('+otp'); // Explicitly include the OTP field
 
-//     return ride;
+    console.log("Ride object after confirmation:", ride);
+    console.log("hi8");
 
-// }
+    if (!ride) {
+        throw new Error('Ride not found');
+    }
+
+    return ride;
+}
 
 // module.exports.startRide = async ({ rideId, otp, driver }) => {
 //     if (!rideId || !otp) {
