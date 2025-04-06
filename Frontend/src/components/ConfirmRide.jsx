@@ -14,7 +14,7 @@ const ConfirmRide = (props) => {
                         <i className="text-green-700 text-xl ri-map-pin-user-fill"></i>
                         <div>
                             <h3 className="text-lg font-medium">
-                                {props.pickup.length > 30 ? `${props.pickup.slice(0, 30)}...` : props.pickup}
+                                {props.pickup.length > 25 ? `${props.pickup.slice(0, 25)}...` : props.pickup}
                             </h3>
                             <p className="text-sm -mt-1 text-gray-500">
                                 {props.pickup.includes(",") ? props.pickup.split(",").slice(-2).join(",").trim() : ""}
@@ -25,7 +25,7 @@ const ConfirmRide = (props) => {
                         <i className="text-red-700 text-xl ri-map-pin-2-fill"></i>
                         <div>
                             <h3 className="text-lg font-medium">
-                                {props.destination.length > 30 ? `${props.destination.slice(0, 30)}...` : props.destination}
+                                {props.destination.length > 25 ? `${props.destination.slice(0, 25)}...` : props.destination}
                             </h3>
                             <p className="text-sm -mt-1 text-gray-500">
                                 {props.destination.includes(",") ? props.destination.split(",").slice(-1).join(",").trim() : ""}

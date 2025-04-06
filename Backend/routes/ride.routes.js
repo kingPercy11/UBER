@@ -29,5 +29,19 @@ router.post('/confirm',
 )
 // console.log("hi3") 
 
+router.get('/start-ride',
+    authMiddleware.authDriver,
+    query('rideId').isMongoId().withMessage('Invalid ride id'),
+    query('otp').isString().isLength({ min: 6, max: 6 }).withMessage('Invalid OTP'),
+    rideController.startRide
+)
+
+router.post('/end-ride',
+    authMiddleware.authDriver,
+    body('rideId').isMongoId().withMessage('Invalid ride id'),
+    rideController.endRide
+)
+
+
 
 module.exports = router;

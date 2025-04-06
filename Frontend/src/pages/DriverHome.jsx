@@ -6,6 +6,7 @@ import 'remixicon/fonts/remixicon.css'
 import DriverDetails from "../components/DriverDetails";
 import RidePopUp from "../components/RidePopUp";
 import ConfirmRidePopUp from "../components/ConfirmRidePopUp";
+import LiveTracking from "../components/LiveTracking";
 import { useRef } from "react";
 import { useEffect,useContext} from "react";
 import { DriverDataContext } from "../context/DriverContext";
@@ -125,7 +126,8 @@ const DriverHome = ()=>{
                 {/*bg-amber-400*/}
             </div>
             <div className="h-3/5">
-                <img className="h-full w-full object-cover" src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif" alt="" />
+                {/* <img className="h-full w-full object-cover" src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif" alt="" /> */}
+                <LiveTracking/>
             </div>
             <div className="h-2/5 p-6">
                 <DriverDetails/>

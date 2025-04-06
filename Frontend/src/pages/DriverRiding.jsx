@@ -1,13 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {useGSAP} from '@gsap/react'
 import gsap from "gsap"
 import 'remixicon/fonts/remixicon.css'
 import { useState,useRef } from "react";
 import FinishRide from "../components/FinishRide";
+import LiveTracking from "../components/LiveTracking";
 const DriverRiding = () => {
     const[finishRidePanel,setfinishRidePanel]=useState(false)
     const finishRidePanelRef = useRef(null)
+    const location = useLocation()
+    const {ride} = location.state || {}
+
 
     useGSAP(() => {
         if(finishRidePanel){
@@ -36,7 +40,9 @@ const DriverRiding = () => {
             </div>
 
             <div className="h-4/5">
-                <img className="h-full w-full object-cover" src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif" alt="" />
+                {/* <img className="h-full w-full object-cover" src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif" alt="" />
+                 */}
+                <LiveTracking/>
             </div>
             <div className="h-1/5 p-6 flex items-center justify-center relative flex-col">
                 <h5 className="p-1 text-center w-[95%] absolute top-0" onClick={()=>{
@@ -44,14 +50,16 @@ const DriverRiding = () => {
                 }}>
                     <i className="text-4xl text-gray-300 ri-arrow-up-wide-fill"></i>
                 </h5>
-                <h4>Distance</h4>
+                {/* <h4>Distance</h4> */}
                 <button onClick={()=>{
                     setfinishRidePanel(true)
                 }}
                 className="w-full h-9 mt-5 bg-green-500 text-white font-semibold rounded-lg">Finish Ride</button>
             </div>
             <div ref={finishRidePanelRef} className="fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-6 pt-12">
-                <FinishRide setfinishRidePanel={setfinishRidePanel} />
+                <FinishRide
+                 ride={ride }
+                 setfinishRidePanel={setfinishRidePanel} />
             </div>
         </div>
     )

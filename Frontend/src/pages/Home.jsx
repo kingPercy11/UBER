@@ -7,10 +7,11 @@ import VehiclePanel from "../components/vehiclePanel"
 import ConfirmRide from "../components/ConfirmRide"
 import LookingForDriver from "../components/LookingForDriver"
 import WaitingForDriver from "../components/WaitingForDriver"
+import LiveTracking from "../components/LiveTracking"
 import { SocketContext } from "../context/SocketContext"
 import { useContext } from "react"
 import { UserDataContext } from "../context/UserContext"
-
+import { useNavigate } from "react-router-dom"
 import axios from "axios"
 
 
@@ -38,7 +39,7 @@ const Home = () => {
     const {socket } = React.useContext(SocketContext);
     const { user } = useContext(UserDataContext)
     const [ride, setRide] = useState(null)
-
+    const navigate = useNavigate()
 
     const submitHandler = (e) => {  
         e.preventDefault()
@@ -51,9 +52,17 @@ const Home = () => {
 
 
     socket.on('ride-confirmed', ride => {
-        setVehicleFound(false)
         setWaitingForDriver(true)
+        // setLookingForDriver(false)
+        setVehicleFound(false)
         setRide(ride)
+
+    })
+
+    socket.on('ride-started', ride => {
+        console.log("ride")
+        setWaitingForDriver(false)
+        navigate('/riding', { state: { ride } }) 
     })
 
     const handlePickupChange = async (e) => {
@@ -174,6 +183,15 @@ const Home = () => {
         }
     }, [waitingForDriver]);
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            // Logic to refresh or fetch new data for LiveTracking
+            console.log("Refreshing LiveTracking...");
+        }, 5000); // Refresh every 5 seconds
+
+        return () => clearInterval(interval); // Cleanup on component unmount
+    }, []);
+
     async function findTrip(){
         setVehiclePanel(true)
         setPanelOpen(false)
@@ -207,9 +225,10 @@ const Home = () => {
     return(
         <div className="h-screen relative overflow-hidden">
             <img className='w-16 absolute left-5 top-5' src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" alt="" />
-            <div className="h-screen w-screen">
+            <div className="h-[70%] w-screen z-20">
                 {/* temp use image */}
-                <img className="h-full w-full object-cover" src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif" alt="" />
+                {/* <img className="h-full w-full object-cover" src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif" alt="" /> */}
+                <LiveTracking />
             </div>
             <div className="flex flex-col justify-end h-screen absolute top-0 w-full ">
                 <div className="h-[30%] bg-white relative p-5">
@@ -304,7 +323,7 @@ const Home = () => {
                 vehicleType={vehicleType}
                 setVehicleFound={setVehicleFound}/>
             </div>
-            <div ref={waitingForDriverRef} className="fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-6 pt-12">
+            <div ref={waitingForDriverRef} className="fixed w-full z-10 bottom-0 translate-y-full  bg-white px-3 py-6 pt-12">
                 <WaitingForDriver 
                 ride={ride} 
                 pickup={pickup}

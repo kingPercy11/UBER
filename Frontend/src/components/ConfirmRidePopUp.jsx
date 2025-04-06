@@ -1,13 +1,44 @@
 import React,{useState} from "react";  
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 const ConfirmRidePopUp = (props) => {
-    const [opt, setOtp] = useState('')
+    const [otp, setOtp] = useState('')
+    const navigate = useNavigate()
 
-    const submitHandler = (e) => {
-        e.preventDefault()
+    const submitHandler = async (e) => {
+        e.preventDefault();
+        try {
+            // console.log("Submitting rideId:", props.ride._id); 
+            // console.log("Submitting OTP:", otp); 
+
+            const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/start-ride`, {
+                params: {
+                    rideId: props.ride._id,
+                    otp: otp
+                },
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('driver-token')}`
+                }
+            });
+
+            // console.log("Response from backend:", response); 
+
+            if (response.status === 200) {
+                props.setConfirmRidePopUpPanel(false);
+                props.setRidePopUpPanel(false);
+                console.log(props.ride)
+                navigate('/driver-riding', { state: { ride: props.ride } });
+            }
+
+        } catch (error) {
+            console.error("Error confirming OTP:", error.response?.data || error); 
+            alert(error.response?.data?.message || "An error occurred. Please try again.");
+        }
     }
+
 
     return (
         <div> 
@@ -62,23 +93,22 @@ const ConfirmRidePopUp = (props) => {
                     <div className="flex items-center gap-5 p-3 ">
                         <i className="text-xl ri-money-rupee-circle-fill"></i>
                         <div>
-                            <h3 className="text-lg font-medium">₹{props.ride?.fare[props.vehicleType]}</h3>
+                            <h3 className="text-lg font-medium">₹{props.ride?.fare}</h3>
                             <p className="text-sm -mt-1 text-gray-500">Cash</p>
                         </div>
                 </div>
 
             </div>
             <div className="w-screen px-6">
-                <form onSubmit={(e)=>{
-                    submitHandler(e)
-                }}>
-                    <input value={opt} onChange={(e)=>setOtp(e.target.value)} className="bg-[#eee] px-3 py-2 text-lg rounded-lg w-full mt-5 font-mono " type="text" placeholder="Enter OTP" />
+                <form onSubmit={submitHandler}>
+                    <input value={otp} onChange={(e)=>setOtp(e.target.value)} className="bg-[#eee] px-3 py-2 text-lg rounded-lg w-full mt-5 font-mono " type="text" placeholder="Enter OTP" />
                     <div className="w-full flex flex-row gap-3 mt-1">
-                        <Link to='/driver-riding' className="w-full h-11 mt-2 flex items-center justify-center bg-green-500 text-white font-semibold rounded-2xl">
+                        <button className="w-full h-11 mt-2 flex items-center justify-center bg-green-500 text-white font-semibold rounded-2xl">
                             <i className="mx-1 text-2xl ri-check-fill"></i> Confirm
-                        </Link>
+                        </button>
                         <button onClick={()=>{
                             props.setConfirmRidePopUpPanel(false)
+                            props.setRidePopUpPanel(false)
                         }} className="w-full h-11 mt-2 bg-red-500 text-white font-semibold rounded-2xl"><i className="ri-close-large-fill"></i> Cancel</button>
 
                     </div>
